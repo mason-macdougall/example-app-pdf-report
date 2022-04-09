@@ -47,35 +47,8 @@ gas = form.text_input("Car: Cost of gas ($/gal)")
 #form = right.form("form4")
 tax_rate = form.text_input("If you want, we can account for income taxes too. Just input your income tax rate (as a percentage)")
 #submit4 = form.form_submit_button("Include tax rate")
+
 submit = form.form_submit_button("Compare jobs!")
-
-inputs = [gas, mpg, mph, pay1, dist1, travel_time1, hours1, days1, pay2, dist2, travel_time2, hours2, days2]
-
-inputs_fin = []
-for i in inputs:
-    if len(str(i)) == 0:
-        inputs_fin.append(np.nan)
-    else:
-        inputs.append(float(i))
-        
-gas, mpg, mph, pay1, dist1, travel_time1, hours1, days1, pay2, dist2, travel_time2, hours2, days2 = inputs_fin
-
-car = {'gas': gas, # $/gal
-       'mpg': mpg,  # miles/gal
-       'mph': mph # miles/hr
-      }
-
-job1 = {'pay': pay1, # $/hr
-        'dist': dist1, # miles (one way)
-        'travel_time': travel_time1, # travel time in mins (one way)
-        'hours': hours1, # hrs of work per week
-        'days': days1} # number of days you go into work per week
-
-job2 = {'pay': pay2, 
-        'dist': dist2,
-        'travel_time': travel_time2,
-        'hours': hours2, 
-        'days': days2}
 
 
 #course = form.selectbox(
@@ -91,10 +64,40 @@ job2 = {'pay': pay2,
 #    for r in report:
 #        st.write(r)
 if submit: #1 and sumbit2 and submit3 and submit4:
+    
+    inputs = [gas, mpg, mph, pay1, dist1, travel_time1, hours1, days1, pay2, dist2, travel_time2, hours2, days2]
+
+    inputs_fin = []
+    for i in inputs:
+        if len(str(i)) == 0:
+            inputs_fin.append(np.nan)
+        else:
+            inputs.append(float(i))
+
+    gas, mpg, mph, pay1, dist1, travel_time1, hours1, days1, pay2, dist2, travel_time2, hours2, days2 = inputs_fin
+
+    car = {'gas': gas, # $/gal
+           'mpg': mpg,  # miles/gal
+           'mph': mph # miles/hr
+          }
+
+    job1 = {'pay': pay1, # $/hr
+            'dist': dist1, # miles (one way)
+            'travel_time': travel_time1, # travel time in mins (one way)
+            'hours': hours1, # hrs of work per week
+            'days': days1} # number of days you go into work per week
+
+    job2 = {'pay': pay2, 
+            'dist': dist2,
+            'travel_time': travel_time2,
+            'hours': hours2, 
+            'days': days2}
+
     if len(str(tax_rate)) == 0:
         tax_rate = None
     else:
         tax_rate = float(tax_rate)/100
+        
     report = get_full_report(job1, job2, car, tax_rate)
     for r in report:
         st.write(r)
