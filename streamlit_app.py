@@ -49,6 +49,10 @@ submit = form.form_submit_button("Generate Test")
 
 def test_print():
     print("This is a test")
+    
+test_print()
+
+print("Also a test")
 
 if submit:
     '''
@@ -74,3 +78,4 @@ if submit:
     '''
     
     test_print()
+    st.write("hello")
