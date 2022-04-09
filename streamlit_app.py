@@ -52,7 +52,7 @@ inputs = [gas, mpg, mph, pay1, dist1, travel_time1, hours1, days1, pay2, dist2, 
 
 inputs_fin = []
 for i in inputs:
-    if len(i) == 0:
+    if len(str(i)) == 0:
         inputs_fin.append(np.nan)
     else:
         inputs.append(float(i))
