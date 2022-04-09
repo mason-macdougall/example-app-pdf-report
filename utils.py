@@ -2,22 +2,22 @@ import numpy as np
 
 def get_gas_cost(job, car):
     
-    if 'dist' in job.keys():
+    if str(job['dist']) != 'nan':# in job.keys():
         job_dist = job['dist']
-    elif 'travel_time' in job.keys() and 'mph' in car.keys():
+    elif str(job['travel_time']) != 'nan' and str(car['mph']) != 'nan':
         job_dist = (job['travel_time']/60.) * car['mph']
     else:
-        print('Error: Must have either \'dist\' in job dict\nor \'travel_time\' in job dict and \'mph\' in car dict')
+        'Error: Must have either \'dist\' in job dict\nor \'travel_time\' in job dict and \'mph\' in car dict'
         return np.nan
     
-    if 'mpg' in car.keys():
+    if str(car['mpg']) != 'nan':
         mpg = car['mpg']
-    elif 'miles_tanksize_fraction' in car.keys():
+    elif len(car['miles_tanksize_fraction']) != 3:
         miles, tank, frac = car['miles_tanksize_fraction']
         gals = tank*frac
         mpg = miles/gals
     else:
-        print('Error: Must have either \'mpg\' or \'miles_tanksize_fraction\' in car dict')
+        'Error: Must have either \'mpg\' or \'miles_tanksize_fraction\' in car dict'
         return np.nan
     
     tot_dist_traveled = (2*job_dist) * job['days']
@@ -34,12 +34,12 @@ def get_pay(job):
 
     
 def get_travel_time(job, car):
-    if 'travel_time' in job.keys():
+    if str(job['travel_time']) != 'nan':
         travel_time = job['travel_time']
-    elif 'dist' in job.keys() and 'mph' in car.keys():
+    elif str(job['dist']) != 'nan' and str(car['mph']) != 'nan':
         travel_time = (job['dist'] / car['mph']) * 60.
     else:
-        print('Error: Must have either \'travel_time\' in job dict\nor \'dist\' in job dict and \'mph\' in car dict')
+        'Error: Must have either \'travel_time\' in job dict\nor \'dist\' in job dict and \'mph\' in car dict'
         return np.nan
     
     travel_tot = (2*travel_time) * job['days']
@@ -61,7 +61,6 @@ def get_net_earnings(job, car, tax_rate=None):
     job_result = {'net': earnings - gas_cost, 'pay': earnings, 'gas': gas_cost}
     
     return job_result
-
 
 def get_full_report(job1, job2, car, tax_rate=None):
 
@@ -132,6 +131,9 @@ def get_full_report(job1, job2, car, tax_rate=None):
             stime = 'MORE'
         elif diff_travel < 0:
             stime = 'FEWER'
+        else:
+            'Error: Travel time calculation failed! Re-check inputs'
+            return [np.nan]
         print_list.append(f'- You will also waste {np.abs(diff_travel)} {stime} hours commuting compared to Job #{jj+1}')
 
         if diff_travel > 0:
@@ -163,7 +165,6 @@ def get_full_report(job1, job2, car, tax_rate=None):
         print_list.append('')
         print_list.append('')
         print_list.append(f'FINAL ASSESSMENT: Job #{ii+1} is definitely the better option in terms of income and travel time!')
-
 
     print_list.append('')
     print_list.append('')
