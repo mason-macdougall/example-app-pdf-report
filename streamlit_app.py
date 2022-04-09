@@ -47,7 +47,7 @@ course = form.selectbox(
 grade = form.slider("Grade", 1, 100, 60)
 submit = form.form_submit_button("Generate Test")
 
-def test_print()
+def test_print():
     print("This is a test")
 
 if submit:
