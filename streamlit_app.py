@@ -70,9 +70,7 @@ if submit:
         data=pdf,
         file_name="diploma.pdf",
         mime="application/octet-stream",
+    )
     '''
     
     test_print()
-    
-    
-    )
