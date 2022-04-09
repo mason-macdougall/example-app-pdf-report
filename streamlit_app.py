@@ -5,10 +5,10 @@ import streamlit as st
 from streamlit.components.v1 import iframe
 
 st.set_page_config(layout="centered", page_icon="🎓", page_title="Diploma Generator")
-st.title("🎓 Diploma PDF Generator")
+st.title("JobComp: Compare the true value of two jobs")
 
 st.write(
-    "This app shows you how you can use Streamlit to make a PDF generator app in just a few lines of code!"
+    "Have a new job with higher pay but it\'s further away?\nNow you\'re wondering if it would even be worth it?\nFear not! We\'ll do the math for you and give you a clear breakdown of the results"
 )
 
 left, right = st.columns(2)
