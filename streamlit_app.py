@@ -8,11 +8,7 @@ st.set_page_config(layout="centered", page_icon="🎓", page_title="Diploma Gene
 st.title("JobComp: Compare the true value of your job offers")
 
 st.write(
-    "Have a new job with higher pay but it\'s further away?"
-)
-
-st.write(
-    "Now you\'re wondering if it would even be worth it?"
+    "Have a new job with higher pay but it\'s further away? Now you\'re wondering if it would even be worth it?"
 )
 
 st.write(
@@ -49,9 +45,13 @@ course = form.selectbox(
     index=0,
 )
 grade = form.slider("Grade", 1, 100, 60)
-submit = form.form_submit_button("Generate PDF")
+submit = form.form_submit_button("Generate Test")
+
+def test_print()
+    print("This is a test")
 
 if submit:
+    '''
     html = template.render(
         student=student,
         course=course,
@@ -70,4 +70,9 @@ if submit:
         data=pdf,
         file_name="diploma.pdf",
         mime="application/octet-stream",
+    '''
+    
+    test_print()
+    
+    
     )
