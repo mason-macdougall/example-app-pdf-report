@@ -18,35 +18,36 @@ st.write(
 
 left, right = st.columns(2)
 
-left.write("Fill in your data for Job #1:")
+left.write("Fill in your data for Job #1, Job #2:")
 form = left.form("form1")
-pay1 = form.text_input("Hourly pay rate ($/hour)")
-dist1 = form.text_input("One-way distance to job (miles)")
-travel_time1 = form.text_input("If distance is unknown, enter the one-way travel time (minutes)")
-hours1 = form.text_input("Amount of time worked per week (hours)")
-days1 = form.text_input("Number of times you go into work per week")
-submit1 = form.form_submit_button("Submit Job #1")
+pay1 = form.text_input("Job #1: Hourly pay rate ($/hour)")
+hours1 = form.text_input("Job #1: Amount of time worked per week (hours)")
+days1 = form.text_input("Job #1: Number of times you go into work per week")
+dist1 = form.text_input("Job #1: One-way distance to job (miles)")
+travel_time1 = form.text_input("Job #1: If distance is unknown, enter the one-way travel time (minutes)")
+#submit1 = form.form_submit_button("Submit Job #1")
 
-right.write("Fill in your data for Job #2:")
-form = right.form("form2")
-pay2 = form.text_input("Hourly pay rate ($/hour)")
-dist2 = form.text_input("One-way distance to job (miles)")
-travel_time2 = form.text_input("If distance is unknown, enter the one-way travel time (minutes)")
-hours2 = form.text_input("Amount of time worked per week (hours)")
-days2 = form.text_input("Number of times you go into work per week")
-submit2 = form.form_submit_button("Submit Job #2")
+#right.write("Fill in your data for Job #2:")
+#form = right.form("form2")
+pay2 = form.text_input("Job #2: Hourly pay rate ($/hour)")
+hours2 = form.text_input("Job #2: Amount of time worked per week (hours)")
+days2 = form.text_input("Job #2: Number of times you go into work per week")
+dist2 = form.text_input("Job #2: One-way distance to job (miles)")
+travel_time2 = form.text_input("Job #2: If distance is unknown, enter the one-way travel time (minutes)")
+#submit2 = form.form_submit_button("Submit Job #2")
 
-left.write("Fill in your car data:")
-form = left.form("form3")
-gas = form.text_input("Cost of gas ($/gal)")
-mpg = form.text_input("How many miles per gallon does your car get (on average)?")
-mph = form.text_input("Average travel speed (miles/hour)")
-submit3 = form.form_submit_button("Compare jobs!")
+#left.write("Fill in your car data:")
+#form = left.form("form3")
+mpg = form.text_input("Car: How many miles per gallon does your car get (on average)?")
+mph = form.text_input("Car: Average travel speed (miles/hour)")
+gas = form.text_input("Car: Cost of gas ($/gal)")
+#submit = form.form_submit_button("Compare jobs!")
 
-right.write("If you want, we can account for income taxes too:")
-form = right.form("form4")
-tax_rate = form.text_input("Estimate your income tax rate (as a percentage)")
-submit4 = form.form_submit_button("Include tax rate")
+#right.write("If you want, we can account for income taxes too:")
+#form = right.form("form4")
+tax_rate = form.text_input("If you want, we can account for income taxes too. Just input your income tax rate (as a percentage)")
+#submit4 = form.form_submit_button("Include tax rate")
+submit = form.form_submit_button("Compare jobs!")
 
 inputs = [gas, mpg, mph, pay1, dist1, travel_time1, hours1, days1, pay2, dist2, travel_time2, hours2, days2]
 
@@ -85,12 +86,12 @@ job2 = {'pay': pay2,
 #grade = form.slider("Grade", 1, 100, 60)
 
 
-if (submit1 and sumbit2 and submit3) and submit4 == False:
-    report = get_full_report(job1, job2, car, tax_rate=None)
-    for r in report:
-        st.write(r)
-elif submit1 and sumbit2 and submit3 and submit4:
-    if len(tax_rate) == 0:
+#if submit: #(submit1 and sumbit2 and submit3) and submit4 == False:
+#    report = get_full_report(job1, job2, car, tax_rate=None)
+#    for r in report:
+#        st.write(r)
+if submit: #1 and sumbit2 and submit3 and submit4:
+    if len(str(tax_rate)) == 0:
         tax_rate = None
     else:
         tax_rate = float(tax_rate)/100
