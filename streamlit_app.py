@@ -5,10 +5,18 @@ import streamlit as st
 from streamlit.components.v1 import iframe
 
 st.set_page_config(layout="centered", page_icon="🎓", page_title="Diploma Generator")
-st.title("JobComp: Compare the true value of two jobs")
+st.title("JobComp: Compare the true value of your job offers")
 
 st.write(
-    "Have a new job with higher pay but it\'s further away?\nNow you\'re wondering if it would even be worth it?\nFear not! We\'ll do the math for you and give you a clear breakdown of the results"
+    "Have a new job with higher pay but it\'s further away?"
+)
+
+st.write(
+    "Now you\'re wondering if it would even be worth it?"
+)
+
+st.write(
+    "Fear not! We\'ll do the math for you and give you a clear breakdown of the results"
 )
 
 left, right = st.columns(2)
@@ -24,6 +32,17 @@ template = env.get_template("template.html")
 left.write("Fill in the data:")
 form = left.form("template_form")
 student = form.text_input("Student name")
+
+
+st.write(
+    student
+)
+
+aa = "test string"
+st.write(
+    aa
+)
+
 course = form.selectbox(
     "Choose course",
     ["Report Generation in Streamlit", "Advanced Cryptography"],
