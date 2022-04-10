@@ -14,7 +14,11 @@ st.write(
 )
 
 st.write(
-    "Fear not! We\'ll do the math for you and give you a clear breakdown of the results"
+    "Or maybe one job offers overtime and the other doesn\'t? And what if you want to account for taxes?"
+)
+
+st.write(
+    "Fear not! We\'ll do all that math for you and give you a clear breakdown of the results"
 )
 
 left, right = st.columns(2)
@@ -110,4 +114,10 @@ if submit: #1 and sumbit2 and submit3 and submit4:
     for r in report:
         st.write(r)
 
-    
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write(
+    "DISCLAIMER: This calculator is for reference and estimation purposes only. We\'re pretty sure the calculations are right, but you never know ¯\_(ツ)_/¯"
+)
