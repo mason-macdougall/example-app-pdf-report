@@ -29,6 +29,8 @@ def get_gas_cost(job, car):
 
 def get_pay(job):
     pay_per_week = job['hours'] * job['pay']
+    if str(job['overtime_hours']) != 'nan' and str(job['overtime_pay']) != 'nan':
+        pay_per_week += job['overtime_hours'] * job['overtime_pay']
     return pay_per_week
 
 
@@ -174,6 +176,9 @@ def get_full_report(job1, job2, car, tax_rate=None):
     else:
         tr = round(tax_rate*100,2)
         print_list.append(f'NOTE: This analysis assumes an income tax rate of {tr}%')
+        
+    if (str(job1['overtime_hours']) != 'nan' and str(job1['overtime_pay']) != 'nan') or (str(job2['overtime_hours']) != 'nan' and str(job2['overtime_pay']) != 'nan'):
+        print_list.append(f'NOTE: This analysis includes overtime pay')
 
     return print_list
 
