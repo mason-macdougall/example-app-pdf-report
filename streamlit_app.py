@@ -33,7 +33,7 @@ travel_time1 = form.text_input("Job #1: If distance is unknown, enter the one-wa
 #right.write("Fill in your data for Job #2:")
 #form = right.form("form2")
 pay2 = form.text_input("Job #2: Regular hourly pay rate ($/hour)")
-hours2 = form.text_input("Job #2: Amount of overtime hours worked per week")
+hours2 = form.text_input("Job #2: Amount of regular hours worked per week")
 overtime_pay2 = form.text_input("Job #2: Overtime hourly pay rate ($/hour) - optional")
 overtime_hours2 = form.text_input("Job #2: Amount of overtime hours worked per week - optional")
 days2 = form.text_input("Job #2: Number of times you go into work per week")
