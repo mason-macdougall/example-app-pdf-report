@@ -3,6 +3,8 @@ from jinja2 import Environment, PackageLoader, select_autoescape, FileSystemLoad
 from datetime import date
 import streamlit as st
 from streamlit.components.v1 import iframe
+import numpy as np
+from utils import *
 
 st.set_page_config(layout="centered", page_icon="💼", page_title="JobComp")
 st.title("JobComp: Compare the true value of your job offers")
