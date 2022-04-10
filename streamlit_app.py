@@ -21,20 +21,24 @@ left, right = st.columns(2)
 
 left.write("Fill in the data for Job #1, Job #2, and your car:")
 form = left.form("form1")
-pay1 = form.text_input("Job #1: Hourly pay rate ($/hour)")
-hours1 = form.text_input("Job #1: Amount of time worked per week (hours)")
+pay1 = form.text_input("Job #1: Regular hourly pay rate ($/hour)")
+hours1 = form.text_input("Job #1: Amount of regular hours worked per week")
+overtime_pay1 = form.text_input("Job #1: Overtime hourly pay rate ($/hour) - optional")
+overtime_hours1 = form.text_input("Job #1: Amount of overtime hours worked per week - optional")
 days1 = form.text_input("Job #1: Number of times you go into work per week")
 dist1 = form.text_input("Job #1: One-way distance to job (miles)")
-travel_time1 = form.text_input("Job #1: If distance is unknown, enter the one-way travel time (minutes)")
+travel_time1 = form.text_input("Job #1: If distance is unknown, enter the one-way travel time (minutes) - optional")
 #submit1 = form.form_submit_button("Submit Job #1")
 
 #right.write("Fill in your data for Job #2:")
 #form = right.form("form2")
-pay2 = form.text_input("Job #2: Hourly pay rate ($/hour)")
-hours2 = form.text_input("Job #2: Amount of time worked per week (hours)")
+pay2 = form.text_input("Job #2: Regular hourly pay rate ($/hour)")
+hours2 = form.text_input("Job #2: Amount of overtime hours worked per week")
+overtime_pay2 = form.text_input("Job #2: Overtime hourly pay rate ($/hour) - optional")
+overtime_hours2 = form.text_input("Job #2: Amount of overtime hours worked per week - optional")
 days2 = form.text_input("Job #2: Number of times you go into work per week")
 dist2 = form.text_input("Job #2: One-way distance to job (miles)")
-travel_time2 = form.text_input("Job #2: If distance is unknown, enter the one-way travel time (minutes)")
+travel_time2 = form.text_input("Job #2: If distance is unknown, enter the one-way travel time (minutes) - optional")
 #submit2 = form.form_submit_button("Submit Job #2")
 
 #left.write("Fill in your car data:")
@@ -46,7 +50,7 @@ gas = form.text_input("Car: Cost of gas ($/gal)")
 
 #right.write("If you want, we can account for income taxes too:")
 #form = right.form("form4")
-tax_rate = form.text_input("If you want, we can account for income taxes too. Just input your income tax rate (as a percentage)")
+tax_rate = form.text_input("If you want, we can account for income taxes too. Just input your income tax rate (as a percentage) - optional")
 #submit4 = form.form_submit_button("Include tax rate")
 
 submit = form.form_submit_button("Compare jobs!")
@@ -65,7 +69,7 @@ submit = form.form_submit_button("Compare jobs!")
 #    for r in report:
 #        st.write(r)
 if submit: #1 and sumbit2 and submit3 and submit4:
-    inputs = [gas, mpg, mph, pay1, dist1, travel_time1, hours1, days1, pay2, dist2, travel_time2, hours2, days2]
+    inputs = [gas, mpg, mph, pay1, dist1, travel_time1, hours1, days1, pay2, dist2, travel_time2, hours2, days2, overtime_hours1, overtime_pay1, overtime_hours2, overtime_pay2]
 
     inputs_fin = []
     for i in inputs:
@@ -74,7 +78,7 @@ if submit: #1 and sumbit2 and submit3 and submit4:
         else:
             inputs_fin.append(float(i))
 
-    gas, mpg, mph, pay1, dist1, travel_time1, hours1, days1, pay2, dist2, travel_time2, hours2, days2 = inputs_fin
+    gas, mpg, mph, pay1, dist1, travel_time1, hours1, days1, pay2, dist2, travel_time2, hours2, days2, overtime_hours1, overtime_pay1, overtime_hours2, overtime_pay2 = inputs_fin
 
     car = {'gas': gas, # $/gal
            'mpg': mpg,  # miles/gal
@@ -85,13 +89,17 @@ if submit: #1 and sumbit2 and submit3 and submit4:
             'dist': dist1, # miles (one way)
             'travel_time': travel_time1, # travel time in mins (one way)
             'hours': hours1, # hrs of work per week
-            'days': days1} # number of days you go into work per week
+            'days': days1, # number of days you go into work per week
+             'overtime_hours': overtime_hours1, # overtime hrs of work per week
+            'overtime_pay': overtime_pay1} # overtime pay rate $/hr
 
     job2 = {'pay': pay2, 
             'dist': dist2,
             'travel_time': travel_time2,
             'hours': hours2, 
-            'days': days2}
+            'days': days2,
+            'overtime_hours': overtime_hours2, 
+            'overtime_pay': overtime_pay2}
 
     if len(str(tax_rate)) == 0:
         tax_rate = None
