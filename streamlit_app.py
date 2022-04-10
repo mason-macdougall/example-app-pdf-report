@@ -7,7 +7,7 @@ import numpy as np
 from utils import *
 
 st.set_page_config(layout="centered", page_icon="💼", page_title="JobComp")
-st.title("JobComp: Compare the true value of your job offers")
+st.title("JobComp: Compare the true value of your job options")
 
 st.write(
     "Have a new job with higher pay but it\'s further away? Now you\'re wondering if it would even be worth it?"
@@ -19,7 +19,7 @@ st.write(
 
 left, right = st.columns(2)
 
-left.write("Fill in your data for Job #1, Job #2:")
+left.write("Fill in the data for Job #1, Job #2, and your car:")
 form = left.form("form1")
 pay1 = form.text_input("Job #1: Hourly pay rate ($/hour)")
 hours1 = form.text_input("Job #1: Amount of time worked per week (hours)")
