@@ -170,7 +170,11 @@ def get_full_report(job1, job2, car, tax_rate=None):
             print_list.append('')
             print_list.append('')
             print_list.append(f'FINAL ASSESSMENT: Job #{ii+1} earns you MORE net income AND pays you MORE for your time spent working + commuting')
-            print_list.append(f'                  Definitely go with Job #{ii+1}!')
+            if eff_pay_ii >= 7.25
+                print_list.append(f'                  Definitely go with Job #{ii+1}!')
+            else:
+                print_list.append(f'                  WARNING: Your effective pay will be lower than the US national minimum wage of $7.25')
+                print_list.append(f'                  Choose wisely!')
 
         elif eff_pay_ii < eff_pay_jj:
             print_list.append('')
@@ -178,6 +182,10 @@ def get_full_report(job1, job2, car, tax_rate=None):
             print_list.append(f'FINAL ASSESSMENT: Job #{ii+1} earns you MORE net income BUT pays you LESS for your time spent working + commuting')
             print_list.append(f'                  If you value your time more, choose Job #{jj+1}')
             print_list.append(f'                  If you value earning money more, choose Job #{ii+1}')
+            if eff_pay_ii < 7.25:
+                print_list.append(f'                  WARNING: Your effective pay for Job #{ii+1} would be lower than US national minimum wage of $7.25')
+            if eff_pay_jj < 7.25:
+                print_list.append(f'                  WARNING: Your effective pay for Job #{jj+1} would be lower than US national minimum wage of $7.25')
             print_list.append(f'                  Choose wisely!')
 
     else:
