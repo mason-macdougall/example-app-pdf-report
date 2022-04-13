@@ -36,10 +36,10 @@ def get_pay(job):
 
     
 def get_travel_time(job, car):
-    if str(job['travel_time']) != 'nan':
-        travel_time = job['travel_time']
-    elif str(job['dist']) != 'nan' and str(car['mph']) != 'nan':
+    if str(job['dist']) != 'nan' and str(car['mph']) != 'nan':
         travel_time = (job['dist'] / car['mph']) * 60.
+    elif str(job['travel_time']) != 'nan':
+        travel_time = job['travel_time']
     else:
         'Error: Must have either \'travel_time\' in job dict\nor \'dist\' in job dict and \'mph\' in car dict'
         return np.nan
@@ -64,28 +64,40 @@ def get_net_earnings(job, car, tax_rate=None):
     
     return job_result
 
+
+
+def get_effective_pay(job, car, tax_rate=None):
+    if tax_rate == None:
+        tax_rate = 0.0
+
+    job_earnings = get_net_earnings(job, car, tax_rate=tax_rate)
+    job_travel = get_travel_time(job, car)
+    
+    if str(job['overtime_hours']) == 'nan':
+        overtime = 0
+    else:
+        overtime = job['overtime_hours']
+
+    eff_pay = job_earnings['net'] / (job['hours'] + overtime + job_travel)
+
+    return eff_pay
+    
+
+
 def get_full_report(job1, job2, car, tax_rate=None):
 
-    #print(car)
     jobs = [job1, job2]
 
     reports = {}
 
     for i, job in enumerate(jobs):
-        #print('\n')
-        #print('Job #'+str(i+1)+':',job)
         job_earnings = get_net_earnings(job, car, tax_rate=tax_rate)
         job_travel = get_travel_time(job, car)
-
-        #print(job_earnings)
-        #print('Travel time (hrs):', job_travel)
 
         report = {'travel_time': job_travel}
         report.update(job_earnings)
 
         reports[i] = report
-
-    reports
 
     val = 'net'
     val1, val2 = reports[0][val], reports[1][val]
@@ -109,33 +121,74 @@ def get_full_report(job1, job2, car, tax_rate=None):
           
     #      Your total weekly income at Job #{ii+1} will be ${net_diff} MORE than at Job #{jj+1}\n')
     print_list.append(f'But here\'s other information worth knowing about Job #{ii+1}:')
-    print_list.append('')
     
     npay = np.abs(net_pay)
     ngas = np.abs(net_gas)
     
-    if net_pay > 0 and net_gas <= 0:
+    if net_pay >= 0 and net_gas <= 0:
         print_list.append(f'- Your paycheck will be ${npay} MORE than it would be for Job #{jj+1}')
         if net_gas < 0:
             print_list.append(f'- AND you will spend ${ngas} LESS on gas compared to Job #{jj+1}')
-    elif net_pay > 0 and net_gas >= 0:
+    elif net_pay >= 0 and net_gas >= 0:
         print_list.append(f'- Your paycheck will be ${npay} MORE than it would be for Job #{jj+1}')
         if net_gas > 0:
             print_list.append(f'- BUT you will spend ${ngas} MORE on gas compared to Job #{jj+1}')
-    elif net_pay < 0 and net_gas <= 0:
+    elif net_pay <= 0 and net_gas <= 0:
         print_list.append(f'- Your paycheck will be ${npay} LESS than it would be for Job #{jj+1}')
         if net_gas < 0:
             print_list.append(f'- BUT you will spend ${ngas} LESS on gas compared to Job #{jj+1}')
         
-
+        
+        
+        
+    eff_pay_ii = round(get_effective_pay(jobs[ii], car, tax_rate=tax_rate), 2)
+    eff_pay_jj = round(get_effective_pay(jobs[jj], car, tax_rate=tax_rate), 2)
+    
     if diff_travel != 0:
         if diff_travel > 0:
             stime = 'MORE'
         elif diff_travel < 0:
             stime = 'FEWER'
         else:
-            'Error: Travel time calculation failed! Re-check inputs'
-            return [np.nan]
+            return ['Error: Travel time calculation failed! Re-check inputs']
+        print_list.append(f'- You will also waste {np.abs(diff_travel)} {stime} hours commuting compared to Job #{jj+1}')
+
+
+        print_list.append('')
+        print_list.append('')
+
+        print_list.append('Accounting for gas spendings, travel time, any overtime, and taxes (if applicable):')
+        print_list.append(f'- Effective hourly pay rate for Job #{ii+1}: ${eff_pay_ii} per hour') #'- You will also waste {np.abs(diff_travel)} {stime} hours commuting compared to Job #{jj+1}')
+        print_list.append(f'- Effective hourly pay rate for Job #{jj+1}: ${eff_pay_jj} per hour') #
+
+        if eff_pay_ii > eff_pay_jj:
+            print_list.append('')
+            print_list.append('')
+            print_list.append(f'FINAL ASSESSMENT: Job #{ii+1} earns you MORE net income AND pays you MORE for your time spent working + commuting')
+            print_list.append(f'                  Definitely go with Job #{ii+1}!')
+
+        elif eff_pay_ii < eff_pay_jj:
+            print_list.append('')
+            print_list.append('')
+            print_list.append(f'FINAL ASSESSMENT: Job #{ii+1} earns you MORE net income BUT pays you LESS for your time spent working + commuting')
+            print_list.append(f'                  If you value your time more, choose Job #{jj+1}')
+            print_list.append(f'                  If you value earning money more, choose Job #{ii+1}')
+            print_list.append(f'                  Choose wisely!')
+
+    else:
+        print_list.append('')
+        print_list.append('')
+        print_list.append(f'FINAL ASSESSMENT: Job #{ii+1} earns you MORE net income and your travel time is roughly the same for either job')
+        print_list.append(f'                  Definitely go with Job #{ii+1}!')
+    
+    '''    
+    if diff_travel != 0:
+        if diff_travel > 0:
+            stime = 'MORE'
+        elif diff_travel < 0:
+            stime = 'FEWER'
+        else:
+            return ['Error: Travel time calculation failed! Re-check inputs']
         print_list.append(f'- You will also waste {np.abs(diff_travel)} {stime} hours commuting compared to Job #{jj+1}')
 
         if diff_travel > 0:
@@ -167,7 +220,9 @@ def get_full_report(job1, job2, car, tax_rate=None):
         print_list.append('')
         print_list.append('')
         print_list.append(f'FINAL ASSESSMENT: Job #{ii+1} is definitely the better option in terms of income and travel time!')
-
+    '''
+    
+    
     print_list.append('')
     print_list.append('')
 
@@ -180,6 +235,10 @@ def get_full_report(job1, job2, car, tax_rate=None):
     if (str(job1['overtime_hours']) != 'nan' and str(job1['overtime_pay']) != 'nan') or (str(job2['overtime_hours']) != 'nan' and str(job2['overtime_pay']) != 'nan'):
         print_list.append(f'NOTE: This analysis includes overtime pay')
 
+    if diff_travel != 0:
+        print_list.append(f'NOTE: Effective hourly pay rate is calculated by (total pay - total spent on gas) / (hours worked + hours commuting)')
+
+        
     return print_list
 
     
