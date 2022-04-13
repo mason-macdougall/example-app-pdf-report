@@ -121,3 +121,8 @@ st.write("")
 st.write(
     r"DISCLAIMER: This calculator is for reference and estimation purposes only. We\'re pretty sure the calculations are right, but you never know ¯\\\_(ツ)\_/¯"
 )
+st.write("")
+st.write("")
+st.write(
+    "To report a bug, email jobcompcalc@gmail.com with a description of the issue and we\'ll be sure to look into it!"
+)
