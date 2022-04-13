@@ -98,7 +98,7 @@ def get_full_report(job1, job2, car, tax_rate=None):
     net_gas = round(reports[ii]['gas'] - reports[jj]['gas'], 2)
     diff_travel = round(reports[ii]['travel_time'] - reports[jj]['travel_time'], 2)
 
-    lost_pay = round(diff_travel * jobs[ii]['pay'], 2)
+    lost_pay = round(diff_travel * jobs[jj]['pay'], 2)
 
     print_list = []
 
