@@ -77,8 +77,13 @@ def get_effective_pay(job, car, tax_rate=None):
         overtime = 0
     else:
         overtime = job['overtime_hours']
-
-    eff_pay = job_earnings['net'] / (job['hours'] + overtime + job_travel)
+        
+    hours_tot = job['hours'] + overtime + job_travel
+    
+    if hours_tot > 0:
+        eff_pay = job_earnings['net'] / hours_tot
+    else:
+        eff_pay = 0
 
     return eff_pay
     
