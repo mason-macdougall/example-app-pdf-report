@@ -245,7 +245,7 @@ def get_full_report(job1, job2, car, tax_rate=None):
         tr = round(tax_rate*100,2)
         print_list.append(f'NOTE: This analysis assumes an income tax rate of {tr}%')
         
-    if (str(job1['overtime_hours']) not in ['nan', 0] and str(job1['overtime_pay']) not in ['nan', 0]) or (str(job2['overtime_hours']) not in ['nan', 0] and str(job2['overtime_pay']) not in ['nan', 0]):
+    if (str(job1['overtime_hours']) not in ['nan', '0', '0.0'] and str(job1['overtime_pay']) not in ['nan', '0', '0.0']) or (str(job2['overtime_hours']) not in ['nan', '0', '0.0'] and str(job2['overtime_pay']) not in ['nan', '0', '0.0']):
         print_list.append(f'NOTE: This analysis includes overtime pay')
 
     if diff_travel != 0:
